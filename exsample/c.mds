@@ -1,0 +1,15 @@
+This is hello world
+```c
+int main(void)
+{
+	printf("hello world!");
+}
+```
+
+and this is assembly version
+```asm "gcc -xc -S -o - -"
+int main(void)
+{
+	printf("hello world!");
+}
+```
