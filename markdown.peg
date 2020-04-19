@@ -1,23 +1,20 @@
-file <- block* eof
+document <- ( filler / block )+ end_of_file
 
-block <- filler  header content footer filler
+filler <- < (!(end_of_line '```') .)+ > { printf(yytext) }
+block <- block_head block_content block_tail
 
-filler <- < ( !header . )* > { printf("filler:%s\n", yytext) }
+block_content <- < (!block_tail .)+ > { cmd_write(yytext, yyleng) }
+block_head <- < end_of_line block_encap white_space* block_label white_space* command? white_space* end_of_line  { cmd_start() }
+block_tail <- end_of_line block_encap end_of_line { cmd_stop() }
 
-content <- < ( !footer . )* > { cmd_write(yytext) }
+command <- ["] (arg / white_space)+ ["]
+arg <- < (!('"' / white_space) .)+ > { cmd_add(yytext) }
 
-footer <- eol '```' eol { cmd_stop() }
 
-header <- '```' ws* type? shell_start ws* < ( !eol word )* > eol { cmd_start() }
+block_label <- < (!(white_space / end_of_line) .)* > { printf("\n```%s\n",yytext) }
 
-type <- < (!shell_start !eol .)* > { printf("```%s%s\n",strlen(yytext) ? " " : "", yytext) }
 
-eol <- '\r\n' / '\n' / '\r'
-
-eof <- !.
-
-ws <- (' ' / '\t')
-
-word <- ws* < ( [^\r\n\t ] )+ > ws* { cmd_add(yytext) }
-
-shell_start <- '#!'
+block_encap <- "```"
+white_space <- ' ' / '\t' / end_of_file
+end_of_line <- '\r\n' / '\n' / '\r'
+end_of_file <- !.

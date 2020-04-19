@@ -1,10 +1,10 @@
 all: md_shell
 
 md_shell: md_shell.c markdown.h
-	gcc md_shell.c -o md_shell
+	gcc -g md_shell.c -o md_shell
 
 markdown.h: markdown.peg
-	peg markdown.peg > markdown.h
+	peg -v markdown.peg > markdown.h
 
 clean:
 	rm markdown.h

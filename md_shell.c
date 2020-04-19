@@ -1,7 +1,8 @@
 #include <unistd.h>
 #include <errno.h>
-
+#include <stdio.h>
 #include "markdown.h"
+
 
 int pipe_fd[2];
 pid_t pid;
@@ -16,8 +17,10 @@ void cmd_add(char *cmd)
 	args[argc-1] = strdup(cmd);
 	args[argc] = NULL;
 }
+
 void cmd_start()
 {
+	if(!argc) return;
 	pipe(pipe_fd);
 	fflush(stdout);
 	pid = fork();
@@ -42,13 +45,22 @@ void cmd_start()
 
 }
 
-void cmd_write(char *content)
+void cmd_write(char *buf, size_t count)
 {
-	write(pipe_fd[1], content, strlen(content));
+	if(argc) {
+		write(pipe_fd[1], buf, count);
+	}
+	else{
+		printf("%s",buf);
+	}
 }
 
 void cmd_stop()
 {
+	if(!argc) {
+		printf("\n```\n");
+		return;
+	}
 	close(pipe_fd[1]);
 	wait(0);
 	waitpid(pid, NULL, 0);
@@ -59,7 +71,8 @@ void cmd_stop()
 	free(args);
 	args = NULL;
 	argc = 0;
-	printf("```\n");
+	fflush(stdout);
+	 printf("\n```\n");
 }
 
 int main(void)
