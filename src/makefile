@@ -2,13 +2,13 @@ ifeq ($(PREFIX),)
     PREFIX := /usr/local
 endif
 
-all: md_shell
+all: mds
 
-build: md_shell
+build: mds
 
 install: mds
-	install -d PREFIX/bin
-	install -m 644 mds PREFIX/bin
+	install -d $(PREFIX)/bin
+	install -m 777 mds $(PREFIX)/bin
 
 mds: mds.c markdown.h
 	gcc -g mds.c -o mds
