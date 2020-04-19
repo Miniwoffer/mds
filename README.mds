@@ -1,9 +1,9 @@
-#Markdown shell v 0.1.0
+# Markdown shell v 0.1.0
 
 
 ## Exsample
 
-``` abc "find exsample -name '*.mds'"
+```ls "ls"
 
 
 ```
@@ -15,3 +15,4 @@
 - [ ] Better error handeling
 - [ ] .md file should be identical if parsing failes
 - [ ] Add some kind of copyleft license
+

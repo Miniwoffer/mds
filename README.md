@@ -1,9 +1,17 @@
-#Markdown shell v 0.1.0
+# Markdown shell v 0.1.0
 
 
 ## Exsample
 
-```abc
+```ls
+exsample
+makefile
+README.md
+README.mds
+src
+test.md
+tests
+t.md
 
 ```
 
@@ -14,3 +22,4 @@
 - [ ] Better error handeling
 - [ ] .md file should be identical if parsing failes
 - [ ] Add some kind of copyleft license
+
