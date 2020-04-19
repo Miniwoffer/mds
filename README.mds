@@ -12,3 +12,5 @@
 - [ ] escape commands (\")
 - [ ] non block commands somthing like "version { cat version }"
 - [ ] Remove need to supply block label
+- [ ] Better error handeling
+- [ ] .md file should be identical if parsing failes
