@@ -13,3 +13,4 @@
 - [ ] Remove need to supply block label
 - [ ] Better error handeling
 - [ ] .md file should be identical if parsing failes
+- [ ] Add some kind of copyleft license
